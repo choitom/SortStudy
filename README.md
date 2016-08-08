@@ -9,3 +9,4 @@ So far implemented
   - Quick
   - RQuick
   - Count
+  - Merge
