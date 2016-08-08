@@ -1,11 +1,3 @@
-/*
-	Author	: Tom Choi
-	Date	: 08/07/2016
-	
-	Implementation of Bubble Sort
-	
-*/
-
 public class BubbleSort extends ArrayInit{
 	public BubbleSort(){
 		super();
@@ -16,28 +8,23 @@ public class BubbleSort extends ArrayInit{
 	}
 	
 	public int[] sort(){
-		boolean flag = true;
-		
-		while(flag){
-			flag = false;
+		print(arr);
+		boolean sorted;
+		do{
+			sorted = true;
 			for(int i = 1; i < arr.length; i++){
-				if(arr[i-1] > arr[i]){
-					swap(i-1, i);
-					flag = true;
+				if(arr[i] < arr[i-1]){
+					swap(i, i-1);
+					sorted = false;
 				}
-			}
-		}
+			}		
+		}while(!sorted);
 		return arr;
 	}
 	
 	public static void main(String[] args){
-		BubbleSort bubble = new BubbleSort();
-		BubbleSort bubble2 = new BubbleSort(20);
-		
-		int[] b1 = bubble.sort();
-		print(b1);
-		
-		int[] b2 = bubble2.sort();
-		print(b2);
+		BubbleSort bs = new BubbleSort(30);
+		int[] s = bs.sort();
+		print(s);
 	}
 }

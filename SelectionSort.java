@@ -1,9 +1,8 @@
 /*
 	Author	: Tom Choi
 	Date	: 08/07/2016
-
-	Implementation of Selection Sort
 	
+	Sort Practice - Selection Sort
 */
 
 public class SelectionSort extends ArrayInit{
@@ -16,9 +15,9 @@ public class SelectionSort extends ArrayInit{
 	}
 	
 	public int[] sort(){
+		print(arr);
 		int min;
 		int minIndex;
-		
 		for(int i = 0; i < arr.length - 1; i++){
 			min = arr[i];
 			minIndex = i;
@@ -28,19 +27,16 @@ public class SelectionSort extends ArrayInit{
 					minIndex = j;
 				}
 			}
-			swap(i, minIndex);
+			if(i != minIndex){
+				swap(i, minIndex);
+			}
 		}
 		return arr;
 	}
 	
 	public static void main(String[] args){
-		SelectionSort selection = new SelectionSort();
-		SelectionSort selection2 = new SelectionSort(20);
-		
-		int[] s = selection.sort();
+		SelectionSort ss = new SelectionSort(30);
+		int[] s = ss.sort();
 		print(s);
-		
-		int[] s2= selection2.sort();
-		print(s2);
 	}
 }

@@ -1,8 +1,8 @@
 /*
 	Author	: Tom Choi
 	Date	: 08/07/2016
-
-	Implementation of Quick Sort
+	
+	Sort Practice - Quick Sort
 */
 
 public class QuickSort extends ArrayInit{
@@ -15,15 +15,16 @@ public class QuickSort extends ArrayInit{
 	}
 	
 	public int[] sort(){
-		sortHelper(0, arr.length-1);
+		print(arr);
+		quickSort(0, arr.length-1);
 		return arr;
 	}
 	
-	private void sortHelper(int low, int high){
+	private void quickSort(int low, int high){
 		if(low < high){
 			int p = partition(low, high);
-			sortHelper(low, p-1);
-			sortHelper(p+1, high);
+			quickSort(low, p-1);
+			quickSort(p+1, high);
 		}
 	}
 	
@@ -32,9 +33,8 @@ public class QuickSort extends ArrayInit{
 		int wall = low + 1;
 		
 		for(int i = low + 1; i <= high; i++){
-			//compare the rest of the items with the pivot
-			if(pivot > arr[i]){
-				swap(i, wall);
+			if(arr[i] < pivot){
+				swap(wall, i);
 				wall++;
 			}
 		}
@@ -43,13 +43,8 @@ public class QuickSort extends ArrayInit{
 	}
 	
 	public static void main(String[] args){
-		QuickSort qs = new QuickSort();
-		QuickSort qs2 = new QuickSort(20);
-		
-		int[] q = qs.sort();
-		int[] q2 = qs2.sort();
-		
-		print(q);
-		print(q2);
+		QuickSort qs = new QuickSort(30);
+		int[] s = qs.sort();
+		print(s);
 	}
 }
