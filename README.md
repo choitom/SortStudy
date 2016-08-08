@@ -10,3 +10,4 @@ So far implemented
   - RQuick
   - Count
   - Merge
+  - Radix
