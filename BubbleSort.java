@@ -1,3 +1,10 @@
+/*
+	Author	: Tom Choi
+	Date	: 08/07/2016
+	
+	Sort Practice - Bubble Sort
+*/
+
 public class BubbleSort extends ArrayInit{
 	public BubbleSort(){
 		super();
