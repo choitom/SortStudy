@@ -5,6 +5,15 @@ import java.util.Random;
 	Date	: 08/07/2016
 	
 	Sort Practice - Random Quick Sort
+	-> 39% more comparisons, but faster than mergesort in practice
+	because of lower cost of other high-frequency operations
+	like keeping auxiliary arrays and local variables.
+	
+	-> goes to O(n^2) if
+		1. list sorted
+		2. list reverse sorted
+		3. many duplicates
+	
 */
 
 public class RQuickSort extends ArrayInit{
