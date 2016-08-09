@@ -4,31 +4,99 @@ import java.util.Random;
 	Author	: Tom Choi
 	Date	: 08/08/2016
 	
-	Pseudocode:
+	Impelementation of Radix Sort that sorts numbers by digits
 	
-	Create 10 buckets for each digit (0 ~ 9)
-	for each digit placing
-		for each element in list
-			move element into respective bucket
-		for each bucket, starting from smallest digit
-			restore element to list
+	Pseudocode
+	1. Create an array with random numbers
+	2. Create a bucket that holds a queue for each digit (0 ~ 9)
+	3. Starting from 1's digit to the max digit
+		For each number in the array, find the digit and store it into
+		its corresponding bucket
+		
+		Dequeue everything from the bucket in order from 0 to 9
+		and put them back into the array
+		
+	
+	Analysis
+		Let k: maxDigit, n: size of array
+		-> O(k*n) = O(n)
 */
 
 public class RadixSort{
 	private int[] arr;
 	private Queue[] bucket;
 	
-	public RadixSort(int size){
-		init(size);
+	public RadixSort(int size, int range){
+		init(size, range);
 	}
 	
-	private void init(int size){
-		Random rand = new Random();
-		bucket = new Queue[10];
+	public int[] sort(){
+		int maxDigit = findMaxDigit();
+		
+		// for each digit
+		for(int i = 0; i < maxDigit; i++){
+			
+			// for each number in the arr
+			for(int j = 0; j < arr.length; j++){
+				
+				// find the digit, put it into its corresponding bucket
+				int num = arr[j];
+				int digit = findDigit(num, i);
+				bucket[digit].push(num);
+			}
+			
+			// restore the bucket
+			restoreBucket();
+		}
+		return arr;
+	}
+	
+	private void restoreBucket(){
+		int temp[] = new int[arr.length];
+		int index = 0;
+		for(int i = 0; i < bucket.length; i++){
+			Queue q = bucket[i];
+			while(!q.isEmpty()){
+				temp[index++] = q.dequeue();
+			}
+		}
+		arr = temp;
+	}
+	
+	private int findDigit(int num, int i){
+		String numStr = String.valueOf(num);
+		int index = numStr.length() - i - 1;
+		int digit;
+		if(index < 0){
+			digit = 0; 
+		}else{
+			digit = Character.digit(numStr.charAt(index), 10);
+		}
+		return digit;
+	}
+	
+	private int findMaxDigit(){
+		int max = arr[0];
+		for(int i = 1; i < arr.length; i++){
+			if(arr[i] > max){
+				max = arr[i];
+			}
+		}
+		int maxDigit = 0;
+		while(max > 0){
+			max = max / 10;
+			maxDigit++;
+		}
+		return maxDigit;
+	}
+	
+	private void init(int size, int range){
 		arr = new int[size];
+		bucket = new Queue[10];
+		Random rand = new Random();
 		
 		for(int i = 0; i < arr.length; i++){
-			arr[i] = rand.nextInt(100000);
+			arr[i] = rand.nextInt(range + 1);
 		}
 		
 		for(int i = 0; i < bucket.length; i++){
@@ -36,75 +104,15 @@ public class RadixSort{
 		}
 	}
 	
-	public int[] sort(){
-		int maxDigit = findMaxDigit();
-		
-		
-		// for each digit placing
-		for(int i = 0; i < maxDigit; i++){
-			
-			// for each number, find digit move it to its corresponding bucket
-			for(int j = 0; j < arr.length; j++){
-				int num = arr[j];
-				int digit = findDigit(num, i);
-				bucket[digit].push(num);
-			}
-			restoreBucket();
-		}
-		return arr;
-	}
 	
-	// dequeue everyting in order
-	private void restoreBucket(){
-		int[] temp = new int[arr.length];
-		int index = 0;
-		for(int i = 0; i < bucket.length; i++){
-			Queue q = bucket[i];
-			while(!q.isEmpty()){
-				int v = q.dequeue();
-				temp[index++] = v;
-			}
-		}
-		arr = temp;
-	}
-	
-	private int findDigit(int num, int dPoint){
-		String number = String.valueOf(num);
-		
-		int index = number.length() - dPoint - 1;
-		int digit;
-		if (index < 0){
-			digit = 0;
-		}else{
-			digit = Character.digit(number.charAt(index), 10);
-		}
-		return digit;
-	}
-	
-	private int findMaxDigit(){
-		int max = arr[0];
-		for(int i = 0; i < arr.length; i++){
-			if(max < arr[i]){
-				max = arr[i];
-			}
-		}
-		
-		int digit = 0;
-		while(max > 0){
-			max = max/10;
-			digit++;
-		}
-		return digit;
-	}
-	
-	public static void print(int[] arr){
-		for(int i = 0; i < arr.length; i++){
-			System.out.print(arr[i] + " ");
+	public static void print(int[] lst){
+		for(int i = 0; i < lst.length; i++){
+			System.out.print(lst[i] + " ");
 		}System.out.println();
 	}
 	
 	public static void main(String[] args){
-		RadixSort rs = new RadixSort(1000);
+		RadixSort rs = new RadixSort(100, 10000000);
 		int[] s = rs.sort();
 		print(s);
 	}
